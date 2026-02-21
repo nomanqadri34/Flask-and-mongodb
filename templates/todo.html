@@ -197,6 +197,18 @@
                 />
             </div>
 
+            <div class="form-group">
+                <label for="itemUUID">
+                    Item UUID
+                </label>
+                <input 
+                    type="text" 
+                    id="itemUUID" 
+                    name="itemUUID" 
+                    placeholder="Optional: Enter item UUID..." 
+                />
+            </div>
+
             <button type="submit" class="submit-btn">Add To-Do Item</button>
         </form>
 
@@ -212,6 +224,7 @@
             const itemName = document.getElementById('itemName').value.trim();
             const itemDescription = document.getElementById('itemDescription').value.trim();
             const itemID = document.getElementById('itemID').value.trim();
+            const itemUUID = document.getElementById('itemUUID').value.trim();
 
             if (!itemName || !itemDescription) {
                 showError('Please fill in all required fields');
@@ -227,7 +240,8 @@
                     body: JSON.stringify({
                         itemName: itemName,
                         itemDescription: itemDescription,
-                        itemID: itemID || null
+                        itemID: itemID || null,
+                        itemUUID: itemUUID || null
                     })
                 });
 
