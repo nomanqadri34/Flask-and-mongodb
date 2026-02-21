@@ -108,5 +108,64 @@ def get_submissions():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+# Task 3 (master_2): API route for To-Do item submission
+@app.route('/submittodoitem', methods=['POST'])
+def submit_todo_item():
+    try:
+        # Get JSON data from request
+        json_data = request.get_json()
+        
+        # Extract fields
+        item_name = json_data.get('itemName', '').strip()
+        item_description = json_data.get('itemDescription', '').strip()
+        
+        # Validate required fields
+        if not item_name or not item_description:
+            return jsonify({
+                "success": False,
+                "message": "Item Name and Description are required"
+            }), 400
+        
+        # Prepare data for MongoDB
+        todo_data = {
+            'itemName': item_name,
+            'itemDescription': item_description,
+            'created_at': datetime.now().isoformat(),
+            'status': 'pending'
+        }
+        
+        # Connect to MongoDB
+        client = get_mongo_client()
+        if not client:
+            return jsonify({
+                "success": False,
+                "message": "Database connection failed"
+            }), 500
+        
+        # Insert into MongoDB
+        try:
+            db = client['new1']
+            collection = db['todo_items']
+            result = collection.insert_one(todo_data)
+            client.close()
+            
+            return jsonify({
+                "success": True,
+                "message": "To-Do item added successfully",
+                "itemId": str(result.inserted_id)
+            }), 201
+        except Exception as db_error:
+            client.close()
+            return jsonify({
+                "success": False,
+                "message": f"Failed to insert data: {str(db_error)}"
+            }), 500
+    
+    except Exception as e:
+        return jsonify({
+            "success": False,
+            "message": f"An error occurred: {str(e)}"
+        }), 500
+
 if __name__ == '__main__':
     app.run(debug=True, host='127.0.0.1', port=5000)
