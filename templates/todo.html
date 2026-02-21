@@ -185,6 +185,18 @@
                 ></textarea>
             </div>
 
+            <div class="form-group">
+                <label for="itemID">
+                    Item ID
+                </label>
+                <input 
+                    type="text" 
+                    id="itemID" 
+                    name="itemID" 
+                    placeholder="Optional: Enter item ID..." 
+                />
+            </div>
+
             <button type="submit" class="submit-btn">Add To-Do Item</button>
         </form>
 
@@ -199,6 +211,7 @@
 
             const itemName = document.getElementById('itemName').value.trim();
             const itemDescription = document.getElementById('itemDescription').value.trim();
+            const itemID = document.getElementById('itemID').value.trim();
 
             if (!itemName || !itemDescription) {
                 showError('Please fill in all required fields');
@@ -213,7 +226,8 @@
                     },
                     body: JSON.stringify({
                         itemName: itemName,
-                        itemDescription: itemDescription
+                        itemDescription: itemDescription,
+                        itemID: itemID || null
                     })
                 });
 
