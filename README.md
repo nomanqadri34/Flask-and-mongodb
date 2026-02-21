@@ -64,7 +64,19 @@ flask-mongodb-app/
 | GET | `/success` | Success page |
 | GET | `/submissions` | View all submissions |
 
-## 📝 How to Use
+## � Screenshots
+
+### API Data Test
+Shows the application fetching and displaying JSON data from the backend API endpoint.
+
+![API Data Test](screenshots/screenshot1_api_test.png)
+
+### Form Submission
+Shows the complete form with validation fields (Name, Email, Phone) and message input ready for MongoDB submission.
+
+![Form Submission](screenshots/screenshot2_form_submission.png)
+
+## �📝 How to Use
 
 ### Getting API Data
 Open http://127.0.0.1:5000/api to see:
