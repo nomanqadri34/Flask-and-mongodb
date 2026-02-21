@@ -2,38 +2,51 @@
     "products": [
         {
             "id": 1,
-            "name": "Laptop",
-            "price": 999.99,
+            "name": "Gaming Laptop",
+            "price": 1299.99,
             "category": "Electronics",
-            "inStock": true
+            "inStock": true,
+            "specs": "RTX 4090, 32GB RAM, 1TB SSD"
         },
         {
             "id": 2,
             "name": "Wireless Mouse",
             "price": 29.99,
             "category": "Accessories",
-            "inStock": true
+            "inStock": true,
+            "specs": "2.4GHz, 1000DPI"
         },
         {
             "id": 3,
             "name": "USB-C Cable",
             "price": 15.99,
             "category": "Accessories",
-            "inStock": true
+            "inStock": true,
+            "specs": "100W, 2 meters"
         },
         {
             "id": 4,
-            "name": "Monitor",
-            "price": 299.99,
+            "name": "4K Monitor",
+            "price": 599.99,
             "category": "Electronics",
-            "inStock": false
+            "inStock": true,
+            "specs": "4K UHD, 144Hz, HDR"
         },
         {
             "id": 5,
             "name": "Mechanical Keyboard",
             "price": 149.99,
             "category": "Accessories",
-            "inStock": true
+            "inStock": true,
+            "specs": "RGB, Cherry MX Switches"
+        },
+        {
+            "id": 6,
+            "name": "Wireless Headphones",
+            "price": 199.99,
+            "category": "Audio",
+            "inStock": true,
+            "specs": "Noise Cancelling, 30hr battery"
         }
     ]
 }
