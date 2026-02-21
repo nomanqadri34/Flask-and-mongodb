@@ -69,22 +69,22 @@ flask-mongodb-app/
 ### API Data Test
 Shows the application fetching and displaying JSON data from the backend API endpoint.
 
-![API Data Test](screenshots/1%20(1).png)
+![API Data Test](screenshots/1_1.png)
 
 ### Form Submission
 Shows the complete form with validation fields (Name, Email, Phone) and message input ready for MongoDB submission.
 
-![Form Submission](screenshots/1%20(2).png)
+![Form Submission](screenshots/1_2.png)
 
 ### Success Page
 Shows the success confirmation page after form submission with submission details.
 
-![Success Page](screenshots/1%20(3).png)
+![Success Page](screenshots/1_3.png)
 
 ### View All Submissions
 Shows the MongoDB submissions view with all stored data.
 
-![Submissions](screenshots/1%20(4).png)
+![Submissions](screenshots/1_4.png)
 
 ## �📝 How to Use
 
