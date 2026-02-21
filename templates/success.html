@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submission Successful</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .success-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            width: 100%;
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        .success-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-30px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        h1 {
+            color: #4CAF50;
+            font-size: 32px;
+            margin-bottom: 15px;
+            animation: slideIn 0.5s ease-out 0.1s both;
+        }
+
+        .message {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 30px;
+            animation: slideIn 0.5s ease-out 0.2s both;
+        }
+
+        .details {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            text-align: left;
+            animation: slideIn 0.5s ease-out 0.3s both;
+        }
+
+        .details p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .details p:last-child {
+            margin-bottom: 0;
+        }
+
+        .details strong {
+            color: #333;
+        }
+
+        .btn-container {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            animation: slideIn 0.5s ease-out 0.4s both;
+        }
+
+        a,
+        button {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-home {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-view {
+            background: #f0f0f0;
+            color: #333;
+            border: 2px solid #ddd;
+        }
+
+        a:hover,
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .timestamp {
+            color: #999;
+            font-size: 12px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="success-container">
+        <div class="success-icon">✓</div>
+        <h1>Success!</h1>
+        <div class="message">Data submitted successfully</div>
+
+        <div class="details">
+            <p>
+                <strong>Status:</strong>
+                <span style="color: #4CAF50;">✓ Completed</span>
+            </p>
+            <p>
+                <strong>Database:</strong>
+                <span>MongoDB Atlas</span>
+            </p>
+            <p>
+                <strong>Collection:</strong>
+                <span>submissions</span>
+            </p>
+            <p>
+                <strong>Timestamp:</strong>
+                <span id="timestamp"></span>
+            </p>
+        </div>
+
+        <div class="btn-container">
+            <a href="/" class="btn-home">← Back to Form</a>
+            <button class="btn-view" onclick="viewSubmissions()">View All Submissions</button>
+        </div>
+
+        <div class="timestamp">
+            Your data has been securely stored in MongoDB Atlas
+        </div>
+    </div>
+
+    <script>
+        // Display current timestamp
+        document.getElementById('timestamp').textContent = new Date().toLocaleString();
+
+        function viewSubmissions() {
+            fetch('/submissions')
+                .then(response => response.json())
+                .then(data => {
+                    alert('Total submissions: ' + data.length + '\n\n' + JSON.stringify(data, null, 2));
+                })
+                .catch(error => alert('Error fetching submissions: ' + error));
+        }
+    </script>
+</body>
+
+</html>
