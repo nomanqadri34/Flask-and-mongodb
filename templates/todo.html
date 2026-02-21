@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+            padding: 40px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        label .required {
+            color: #e74c3c;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        input[type="text"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .success-msg {
+            background: #d4edda;
+            color: #155724;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error-msg {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+            border: 1px solid #f5c6cb;
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .back-link a:hover {
+            color: #764ba2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📝 To-Do List</h1>
+            <p>Add new items to your to-do list</p>
+        </div>
+
+        <div class="success-msg" id="successMsg">
+            ✓ Item added successfully!
+        </div>
+        <div class="error-msg" id="errorMsg"></div>
+
+        <form id="todoForm">
+            <div class="form-group">
+                <label for="itemName">
+                    Item Name
+                    <span class="required">*</span>
+                </label>
+                <input 
+                    type="text" 
+                    id="itemName" 
+                    name="itemName" 
+                    placeholder="Enter the item name..." 
+                    required
+                />
+            </div>
+
+            <div class="form-group">
+                <label for="itemDescription">
+                    Item Description
+                    <span class="required">*</span>
+                </label>
+                <textarea 
+                    id="itemDescription" 
+                    name="itemDescription" 
+                    placeholder="Describe your to-do item..." 
+                    required
+                ></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn">Add To-Do Item</button>
+        </form>
+
+        <div class="back-link">
+            <a href="/">← Back to Form</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('todoForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const itemName = document.getElementById('itemName').value.trim();
+            const itemDescription = document.getElementById('itemDescription').value.trim();
+
+            if (!itemName || !itemDescription) {
+                showError('Please fill in all required fields');
+                return;
+            }
+
+            try {
+                const response = await fetch('/submittodoitem', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        itemName: itemName,
+                        itemDescription: itemDescription
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showSuccess();
+                    document.getElementById('todoForm').reset();
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 2000);
+                } else {
+                    showError(data.message || 'Error adding item');
+                }
+            } catch (error) {
+                showError('Network error: ' + error.message);
+            }
+        });
+
+        function showSuccess() {
+            const successMsg = document.getElementById('successMsg');
+            const errorMsg = document.getElementById('errorMsg');
+            errorMsg.style.display = 'none';
+            successMsg.style.display = 'block';
+        }
+
+        function showError(message) {
+            const errorMsg = document.getElementById('errorMsg');
+            const successMsg = document.getElementById('successMsg');
+            successMsg.style.display = 'none';
+            errorMsg.textContent = '✗ Error: ' + message;
+            errorMsg.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
